@@ -50,9 +50,9 @@ export const projectData = {
           description:
             "To ensure structural integrity and signal reliability, a multi-material FDM architecture was implemented. Load-bearing hinges and electronics enclosures were printed in PLA-Carbon Fiber (PLA-CF) for high specific stiffness, shielding the internal microcontrollers and PCBs from mechanical deformation. The modular cuffs utilize TPU 90A/95A printed via AMS to provide a conformable interface that maintains electrode-to-skin contact. Internal contact surfaces are lined with a neoprene-silicone composite, providing a high-friction, biocompatible barrier that prevents brace migration during leg flexion.",
           visual: {
-            type: "heatmap",
+            type: "image",
             caption: "Von Mises stress map — peak stress localised at medial pivot boss",
-            content: "FEA_HEATMAP",
+            content: "/knee_brace_placeholder.jpg",
           },
         },
         {
@@ -62,9 +62,9 @@ export const projectData = {
           description:
             "A distributed processing pipeline utilizes Arduino Nano microcontrollers for high-frequency IMU and EMG data acquisition. Custom-designed PCBs handle analog signal conditioning for muscle activation tracking, with real-time telemetry transmitted via Bluetooth to a Python-driven backend. The system integrates a React-based frontend to visualize gait metrics and recovery progress, providing clinicians with an intuitive, data-driven rehabilitation interface.",
           visual: {
-            type: "pipeline",
-            caption: "Firmware task architecture — RTOS priority hierarchy",
-            content: "FIRMWARE_PIPELINE",
+            type: "gif",
+            caption: "Live telemetry dashboard: Knee kinematics and muscle activation tracking",
+            content: "/GUI_Knee_Brace.gif",
           },
         },
       ],

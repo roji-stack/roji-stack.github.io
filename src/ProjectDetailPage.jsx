@@ -182,11 +182,24 @@ function VisualBlock({ type, accent, caption, content }) {
     render:    <EnclosurePlaceholder accent={accent} />,
     diagram:   <NvmDiagramPlaceholder accent={accent} />,
   };
+  if ((type === 'image' || type === 'gif') && content) {
+    return (
+      <div className="flex flex-col gap-2">
+        <div className="rounded-md overflow-hidden border border-slate-700/60" style={{ background: `linear-gradient(135deg, ${accent}18 0%, #0f172a 55%)` }}>
+          <img src={content} alt={caption} className="w-full h-auto block" />
+        </div>
+        <p className="text-xs text-slate-500 font-mono leading-tight">{caption}</p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-2">
       <div className="relative rounded-md overflow-hidden border border-slate-700/60" style={{ aspectRatio:"16/9", backgroundColor: "#0f172a" }}>
-        {visuals[type] || (
-          type === 'image' && content ? (
+        {visuals[type]
+          ? visuals[type]
+          : type === 'gif' && content
+          ? (
             <div className="absolute inset-0 flex items-center justify-center scanlines" style={{ background: `linear-gradient(135deg, ${accent}18 0%, #0f172a 55%)` }}>
               <svg className="absolute inset-0 w-full h-full opacity-10 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
@@ -201,10 +214,11 @@ function VisualBlock({ type, accent, caption, content }) {
               </svg>
               <img src={content} alt={caption} className="relative z-10 w-full h-full object-contain p-4 drop-shadow-2xl" style={{ filter: "drop-shadow(0 25px 25px rgb(0 0 0 / 0.8))" }} />
             </div>
-          ) : (
+          )
+          : (
             <div className="w-full h-full bg-slate-800 flex items-center justify-center text-slate-600 text-sm">[Visual]</div>
           )
-        )}
+        }
       </div>
       <p className="text-xs text-slate-500 font-mono leading-tight">{caption}</p>
     </div>
