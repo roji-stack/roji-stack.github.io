@@ -51,7 +51,7 @@ export const projectData = {
             "To ensure structural integrity and signal reliability, a multi-material FDM architecture was implemented. Load-bearing hinges and electronics enclosures were printed in PLA-Carbon Fiber (PLA-CF) for high specific stiffness, shielding the internal microcontrollers and PCBs from mechanical deformation. The modular cuffs utilize TPU 90A/95A printed via AMS to provide a conformable interface that maintains electrode-to-skin contact. Internal contact surfaces are lined with a neoprene-silicone composite, providing a high-friction, biocompatible barrier that prevents brace migration during leg flexion.",
           visual: {
             type: "image",
-            caption: "Von Mises stress map — peak stress localised at medial pivot boss",
+            caption: "Working prototypes being prepared for testing",
             content: "/knee_brace_placeholder.jpg",
           },
         },
