@@ -260,10 +260,6 @@ export default function Portfolio() {
 
         <div className="relative w-full flex flex-col lg:flex-row items-center justify-between gap-12">
           <div className="max-w-3xl">
-            <p className="font-mono text-amber-400 text-xs tracking-widest uppercase mb-4 fade-up fade-up-1">
-              {META.seeking}
-            </p>
-
             <h1 className="font-mono text-5xl md:text-7xl font-bold text-slate-100 leading-none mb-2 fade-up fade-up-2">
               {META.name}
             </h1>
