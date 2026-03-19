@@ -193,7 +193,12 @@ export default function Portfolio() {
     return (
       <ProjectDetailPage 
         projectId={activeProjectId} 
-        onBack={() => setActiveProjectId(null)} 
+        onBack={() => {
+          setActiveProjectId(null);
+          setTimeout(() => {
+            document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+          }, 50);
+        }} 
         onNavigate={setActiveProjectId} 
       />
     );
