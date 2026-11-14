@@ -15,6 +15,9 @@ import site from '../lib/site';
         <span class="meta muted">{e.dates}</span>
       </div>
       <p class="sub">{e.degree}<span class="muted"> · {e.location}</span></p>
+      {e.awards?.length > 0 && (
+        <p class="awards"><span class="meta muted">Awards</span> {e.awards.join(' · ')}</p>
+      )}
       {e.notes && <p>{e.notes}</p>}
     </div>
   ))}
@@ -48,6 +51,8 @@ import site from '../lib/site';
   .head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0 1rem; }
   .entry h3 { margin: 0; font-size: var(--step-0); }
   .sub { margin: 0 0 0.4rem; }
+  .awards { margin: 0.2rem 0 0; }
+  .awards .meta { margin-right: 0.5rem; }
   .entry ul { margin: 0.4rem 0 0; padding-left: 1.2rem; }
   .entry li + li { margin-top: 0.2rem; }
   .courses { columns: 2 16rem; padding-left: 1.2rem; }

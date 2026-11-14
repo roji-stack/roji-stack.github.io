@@ -122,6 +122,7 @@ collections:
               - { name: location, label: Location, widget: string }
               - { name: degree, label: Degree / program, widget: string }
               - { name: dates, label: Dates, widget: string }
+              - { name: awards, label: Awards, widget: list, required: false, default: [], hint: "e.g. Dean's Honor List (2025–26)" }
               - { name: notes, label: Notes, widget: text, required: false }
           - { name: coursework, label: Relevant coursework, widget: list, required: false, default: [] }
           - name: experience
