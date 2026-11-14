@@ -1,0 +1,143 @@
+# Sveltia CMS configuration: https://sveltiacms.app/en/docs
+# The "projects" fields mirror src/content.config.ts exactly. If you change one, change the other.
+
+backend:
+  name: github
+  repo: roji-stack/roji-stack.github.io
+  branch: main
+  # Sign-in through the Cloudflare Worker (see README → "Set up the GitHub login").
+  # Until it's deployed, use "Sign In with Token" on the login screen.
+  base_url: https://sveltia-cms-auth.ryan130210-c8d.workers.dev
+  commit_messages:
+    create: 'Add {{collection}} “{{slug}}”'
+    update: 'Update {{collection}} “{{slug}}”'
+    delete: 'Delete {{collection}} “{{slug}}”'
+    uploadMedia: 'Upload “{{path}}”'
+    deleteMedia: 'Delete “{{path}}”'
+
+site_url: https://roji-stack.github.io
+display_url: https://roji-stack.github.io
+logo_url: /favicon.svg
+
+# All uploads go here. The site build resizes and compresses them (src/lib/media.ts).
+media_folder: /src/assets/media
+public_folder: /src/assets/media
+
+media_libraries:
+  default:
+    config:
+      max_file_size: 26214400 # 25 MB
+      # Shrink very large photos in the browser before upload (keeps the repo small, strips EXIF/GPS).
+      # Animated GIFs are uploaded unchanged.
+      transformations:
+        raster_image:
+          format: webp
+          quality: 90
+          width: 2400
+          height: 2400
+
+collections:
+  - name: projects
+    label: Projects
+    label_singular: Project
+    description: Project write-ups. Each one gets its own page at /projects/<file-name>/.
+    folder: src/content/projects
+    extension: md
+    format: frontmatter
+    create: true
+    delete: true
+    identifier_field: title
+    slug: '{{slug}}'
+    summary: '{{title}}'
+    sortable_fields: [date, title]
+    preview_path: 'projects/{{slug}}/'
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: date, label: Start date, widget: datetime, type: date }
+      - { name: endDate, label: End date, widget: datetime, type: date, required: false, hint: Leave empty for a single date or an ongoing project. }
+      - { name: ongoing, label: Ongoing, widget: boolean, default: false, hint: 'Shows "– present" instead of an end date.' }
+      - { name: summary, label: One-line summary, widget: string, hint: Shown in the project list and used as the page's search/social description. }
+      - { name: role, label: Your role, widget: string, required: false }
+      - { name: tags, label: Tags, widget: list, required: false, default: [], hint: Comma-separated, e.g. ESP32, C++, CAD }
+      - { name: cover, label: Cover image, widget: image, required: false, hint: A real photo of the hardware or a screenshot. Also used as the social preview image. }
+      - { name: coverAlt, label: Cover alt text, widget: string, required: false, hint: Required if there is a cover image. Describe what the image shows. }
+      - name: gallery
+        label: Gallery
+        widget: list
+        required: false
+        default: []
+        summary: '{{caption}}'
+        fields:
+          - { name: image, label: Image, widget: image }
+          - { name: alt, label: Alt text, widget: string }
+          - { name: caption, label: Caption, widget: string, required: false }
+      - name: links
+        label: Links
+        widget: list
+        required: false
+        default: []
+        summary: '{{label}}'
+        hint: Repo, report, video, etc. For a PDF, upload it with the file picker.
+        fields:
+          - { name: label, label: Label, widget: string }
+          - { name: url, label: URL or file, widget: file }
+      - { name: featured, label: Featured on home page, widget: boolean, default: false }
+      - { name: draft, label: Draft (hidden from the live site), widget: boolean, default: false }
+
+      # Write-up sections. Any can be left empty; empty sections are not shown.
+      # Markdown tips: ![alt](image "Caption") makes a captioned figure; a PDF link on its own line
+      # becomes an embedded viewer; $x^2$ / $$...$$ for math; ``` for code; | tables |;
+      # a paragraph starting with TODO is highlighted as unfinished.
+      - { name: overview, label: Overview, widget: markdown, required: false, modes: [raw, rich_text] }
+      - { name: problem, label: Problem / Requirements, widget: markdown, required: false, modes: [raw, rich_text] }
+      - { name: approach, label: Approach / Design, widget: markdown, required: false, modes: [raw, rich_text] }
+      - { name: build, label: Build, widget: markdown, required: false, modes: [raw, rich_text] }
+      - { name: testing, label: Testing & Results, widget: markdown, required: false, modes: [raw, rich_text] }
+      - { name: differently, label: What I’d do differently, widget: markdown, required: false, modes: [raw, rich_text] }
+      - { name: body, label: Extra content (optional), widget: markdown, required: false, modes: [raw, rich_text], hint: Anything that doesn't fit the sections above. Appears after them. }
+
+  - name: site
+    label: Site settings
+    editor: { preview: false }
+    files:
+      - name: settings
+        label: Home page & About page
+        file: src/data/site.json
+        format: json
+        fields:
+          - { name: name, label: Name, widget: string }
+          - { name: description, label: Site description (search engines), widget: text }
+          - { name: intro, label: Home page intro (2–3 plain sentences), widget: text }
+          - { name: seeking, label: What you're looking for, widget: string }
+          - { name: email, label: Email, widget: string }
+          - { name: github, label: GitHub URL, widget: string }
+          - { name: linkedin, label: LinkedIn URL, widget: string }
+          - { name: resume, label: Resume PDF, widget: file, hint: Upload a new resume here, or replace public/resume.pdf. }
+          - name: education
+            label: Education
+            widget: list
+            summary: '{{school}}'
+            fields:
+              - { name: school, label: School, widget: string }
+              - { name: location, label: Location, widget: string }
+              - { name: degree, label: Degree / program, widget: string }
+              - { name: dates, label: Dates, widget: string }
+              - { name: notes, label: Notes, widget: text, required: false }
+          - { name: coursework, label: Relevant coursework, widget: list, required: false, default: [] }
+          - name: experience
+            label: Experience
+            widget: list
+            summary: '{{role}} · {{org}}'
+            fields:
+              - { name: role, label: Role, widget: string }
+              - { name: org, label: Organization, widget: string }
+              - { name: location, label: Location, widget: string }
+              - { name: dates, label: Dates, widget: string, hint: 'e.g. Aug 2026 – present' }
+              - { name: bullets, label: Bullet points, widget: list, required: false, field: { name: bullet, label: Bullet, widget: text } }
+          - name: skills
+            label: Skills
+            widget: list
+            summary: '{{group}}'
+            fields:
+              - { name: group, label: Group, widget: string }
+              - { name: items, label: Items (comma-separated), widget: string }

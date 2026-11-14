@@ -1,0 +1,105 @@
+---
+import 'katex/dist/katex.min.css';
+import '../../styles/prose.css';
+import Base from '../../layouts/Base.astro';
+import { SECTIONS } from '../../content.config';
+import { getProjects, type Project } from '../../lib/projects';
+import { dateRange, isoDate } from '../../lib/format';
+import { renderMarkdown } from '../../lib/markdown';
+import { optimize, ogImage, isMediaPath, resolveFile } from '../../lib/media';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+
+const { project } = Astro.props as { project: Project };
+const d = project.data;
+
+const sections = (
+  await Promise.all(
+    SECTIONS.map(async (s) => ({ ...s, html: await renderMarkdown(d[s.key], { demoteHeadings: 1 }) })),
+  )
+).filter((s) => s.html);
+const body = await renderMarkdown(project.body);
+const cover = d.cover ? await optimize(d.cover) : undefined;
+const og = d.cover ? await ogImage(d.cover) : undefined;
+const gallery = await Promise.all(d.gallery.map(async (g) => ({ ...g, img: await optimize(g.image) })));
+const links = d.links.map((l) => ({ ...l, url: isMediaPath(l.url) ? (resolveFile(l.url) ?? l.url) : l.url }));
+---
+<Base title={d.title} description={d.summary} image={og} imageAlt={d.coverAlt} type="article">
+  <article>
+    <header class="project-head">
+      <h1>{d.title}</h1>
+      <p class="summary">{d.summary}</p>
+      <dl class="facts meta">
+        <div><dt>Date</dt><dd><time datetime={isoDate(d.date)}>{dateRange(d)}</time></dd></div>
+        {d.role && <div><dt>Role</dt><dd>{d.role}</dd></div>}
+        {d.tags.length > 0 && <div><dt>Tags</dt><dd>{d.tags.join(', ')}</dd></div>}
+        {links.length > 0 && (
+          <div><dt>Links</dt><dd>{links.map((l, i) => (<>{i > 0 && ' · '}<a href={l.url}>{l.label}</a></>))}</dd></div>
+        )}
+      </dl>
+    </header>
+
+    {cover && (
+      <figure class="figure cover">
+        <img src={cover.src} srcset={cover.srcset} sizes="(min-width: 760px) 736px, 100vw"
+             width={cover.width} height={cover.height} alt={d.coverAlt} fetchpriority="high" />
+      </figure>
+    )}
+
+    {sections.length > 1 && (
+      <nav class="toc meta" aria-label="Sections">
+        <ol>{sections.map((s) => <li><a href={`#${s.key}`}>{s.title}</a></li>)}</ol>
+      </nav>
+    )}
+
+    <div class="prose">
+      {sections.map((s) => (
+        <section aria-labelledby={s.key}>
+          <h2 id={s.key}>{s.title}</h2>
+          <Fragment set:html={s.html} />
+        </section>
+      ))}
+      {body && <Fragment set:html={body} />}
+    </div>
+
+    {gallery.length > 0 && (
+      <section class="gallery" aria-labelledby="gallery">
+        <h2 id="gallery">Gallery</h2>
+        <div class="grid">
+          {gallery.map((g) => (
+            <figure class="figure">
+              <a href={g.img.src}>
+                <img src={g.img.src} srcset={g.img.srcset} sizes="(min-width: 760px) 360px, 100vw"
+                     width={g.img.width} height={g.img.height} alt={g.alt} loading="lazy" decoding="async" />
+              </a>
+              {g.caption && <figcaption>{g.caption}</figcaption>}
+            </figure>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <p class="back meta"><a href="/#projects">← All projects</a></p>
+  </article>
+</Base>
+
+<style>
+  .project-head { max-width: var(--measure); }
+  .summary { font-size: 1.2rem; line-height: 1.5; margin-bottom: 1.25rem; }
+  .facts { margin: 0; display: grid; gap: 0.2rem; }
+  .facts div { display: grid; grid-template-columns: 4.5rem 1fr; gap: 1rem; }
+  .facts dt { color: var(--text-muted); }
+  .facts dd { margin: 0; }
+  .cover { margin: 2rem 0; }
+  .toc { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 0.6rem 0; margin: 2rem 0 0; }
+  .toc ol { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; counter-reset: s; }
+  .toc li { counter-increment: s; }
+  .toc li::before { content: counter(s) '. '; color: var(--text-muted); }
+  .gallery .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: 1.25rem; }
+  .gallery .figure { margin: 0; }
+  .gallery img { aspect-ratio: 4 / 3; object-fit: cover; width: 100%; }
+  .back { margin-top: 3rem; }
+</style>

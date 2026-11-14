@@ -1,0 +1,75 @@
+---
+// Fonts are self-hosted via Fontsource. To change families, swap these imports
+// and the --font-body / --font-mono variables in src/styles/tokens.css.
+import '@fontsource/source-serif-4/400.css';
+import '@fontsource/source-serif-4/400-italic.css';
+import '@fontsource/source-serif-4/600.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '../styles/global.css';
+import site from '../lib/site';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;           // page title; omit on the home page
+  description?: string;
+  image?: string;           // OG image URL (absolute or root-relative)
+  imageAlt?: string;
+  type?: 'website' | 'article';
+}
+
+const { title, description = site.description, image, imageAlt, type = 'website' } = Astro.props;
+const fullTitle = title ? `${title} · ${site.name}` : `${site.name} · Mechatronics Engineering`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = image ? new URL(image, Astro.site).href : undefined;
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const nav = [
+  { href: '/', label: 'Projects' },
+  { href: '/about', label: 'About' },
+  { href: site.resume, label: 'Resume (PDF)' },
+];
+---
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#161615" media="(prefers-color-scheme: dark)" />
+
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title ?? site.name} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    {ogImage && imageAlt && <meta property="og:image:alt" content={imageAlt} />}
+    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="page">
+      <header class="site-header">
+        <a class="site-name" href="/">{site.name}</a>
+        <nav class="site-nav" aria-label="Main">
+          <ul>
+            {nav.map((l) => (
+              <li><a href={l.href} aria-current={l.href === path ? 'page' : undefined}>{l.label}</a></li>
+            ))}
+          </ul>
+        </nav>
+      </header>
+      <main id="main">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+  </body>
+</html>

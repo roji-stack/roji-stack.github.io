@@ -1,0 +1,59 @@
+{
+  "name": "Ryan Jin",
+  "description": "Ryan Jin, Mechatronics Engineering (Biomedical dual) student at Western University. Project write-ups in embedded systems, robotics and biomedical devices.",
+  "intro": "I'm a third-year Mechatronics Engineering student, in the Biomedical dual degree, at Western University in London, Ontario. Most of my work is in embedded systems, robotics and biomedical devices: ESP32 firmware for sensors, mechanisms and enclosures in CAD, and control loops for things that move.",
+  "seeking": "I'm looking for a 16-month co-op starting in Summer 2027.",
+  "email": "ryan130210@gmail.com",
+  "github": "https://github.com/roji-stack",
+  "linkedin": "https://www.linkedin.com/in/ryan-jin-45a900277/",
+  "resume": "/resume.pdf",
+  "education": [
+    {
+      "school": "University of Western Ontario (Western University)",
+      "location": "London, ON",
+      "degree": "Bachelor of Engineering Science, Mechatronics Engineering (Biomedical dual degree)",
+      "dates": "Expected 2028",
+      "notes": ""
+    }
+  ],
+  "coursework": [],
+  "experience": [
+    {
+      "role": "Engineering Director",
+      "org": "WEBOTs (Western Robotics Club)",
+      "location": "London, ON",
+      "dates": "Oct 2026 – present",
+      "bullets": [
+        "Lead a team of engineering students in the design, simulation and programming of autonomous robotic systems.",
+        "Coordinate project timelines, manage technical resources and run design reviews."
+      ]
+    },
+    {
+      "role": "Mechanical Design Lead",
+      "org": "Western Engineering Biomedical Engineering Club (WE-BMC)",
+      "location": "London, ON",
+      "dates": "Aug 2026 – present",
+      "bullets": [
+        "Designed a polycentric hinge for a 3D-printed smart knee brace using Onshape and SolidWorks.",
+        "Iterated quickly on prototypes through 3D printing, working with the electrical team so the physical design supported the platform's electrical architecture.",
+        "Lead a team of 20 students and mentor them on the engineering design process."
+      ]
+    },
+    {
+      "role": "Robotics Systems Lead",
+      "org": "Martingrove Collegiate Institute",
+      "location": "Toronto, ON",
+      "dates": "Sep 2023 – May 2024",
+      "bullets": [
+        "Developed and tuned a PID control algorithm through iterative bench testing to improve the speed, stability and error correction of a line-following robot.",
+        "Programmed navigation logic in C++ and implemented sensor feedback loops for precise motion control."
+      ]
+    }
+  ],
+  "skills": [
+    { "group": "Programming & firmware", "items": "Python, C, C++, JavaScript, TypeScript, SQL, PID control" },
+    { "group": "Web & simulation", "items": "React, Vite, Tailwind CSS, Flask, ROS 2, PyBullet" },
+    { "group": "Electronics & hardware", "items": "ESP32, sensor integration, power distribution, multimeters, oscilloscopes" },
+    { "group": "Tools", "items": "Git/GitHub, Linux/Unix terminal, SolidWorks, Onshape" }
+  ]
+}

@@ -1,0 +1,51 @@
+/* Long-form write-up content (project pages). */
+.prose { max-width: var(--measure); }
+.prose > :first-child { margin-top: 0; }
+.prose li + li { margin-top: 0.25em; }
+.prose blockquote {
+  margin-left: 0; padding-left: 1rem; border-left: 2px solid var(--rule); color: var(--text-muted);
+}
+
+.prose figure, .figure { margin: 1.75rem 0; }
+.prose figure img, .figure img { border: 1px solid var(--rule); border-radius: var(--radius); background: var(--figure-bg); }
+.prose figcaption, .figure figcaption {
+  margin-top: 0.5rem;
+  font-size: var(--step--1);
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+/* PDFs */
+.prose figure.pdf object {
+  width: 100%; aspect-ratio: 8.5 / 11; max-height: 85vh;
+  border: 1px solid var(--rule); border-radius: var(--radius); display: block;
+}
+.prose figure.pdf object p { padding: 1rem; }
+
+/* Tables */
+.table-wrap { overflow-x: auto; margin: 0 0 1.25rem; }
+.prose table { border-collapse: collapse; width: 100%; font-size: 0.95em; margin: 0; }
+.prose th, .prose td { text-align: left; vertical-align: top; padding: 0.4rem 0.75rem 0.4rem 0; border-bottom: 1px solid var(--rule); }
+.prose th { font-weight: 600; border-bottom-color: var(--text-muted); }
+.prose td code, .prose th code { white-space: nowrap; }
+
+/* Code */
+.prose code { font-family: var(--font-mono); font-size: 0.85em; }
+.prose :not(pre) > code { background: var(--bg-subtle); padding: 0.1em 0.3em; border-radius: var(--radius); }
+.prose pre {
+  font-size: 0.95rem; line-height: 1.5;
+  padding: 0.9rem 1rem; overflow-x: auto;
+  border: 1px solid var(--rule); border-radius: var(--radius);
+  background: var(--bg-subtle) !important;
+}
+.prose pre code { font-size: 0.85rem; }
+@media (prefers-color-scheme: dark) {
+  .prose .shiki, .prose .shiki span { color: var(--shiki-dark) !important; }
+}
+
+/* Math */
+.prose .katex-display { overflow-x: auto; overflow-y: hidden; padding: 0.25rem 0; }
+.prose .katex { font-size: 1.05em; }
+
+/* Footnotes */
+.prose .footnotes { font-size: var(--step--1); color: var(--text-muted); border-top: 1px solid var(--rule); margin-top: 3rem; }

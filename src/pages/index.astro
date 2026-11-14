@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import FeaturedProject from '../components/FeaturedProject.astro';
+import ProjectTable from '../components/ProjectTable.astro';
+import site from '../lib/site';
+import { getProjects } from '../lib/projects';
+
+const projects = await getProjects();
+const featured = projects.filter((p) => p.data.featured);
+---
+<Base>
+  <section class="intro" aria-label="Introduction">
+    <p>{site.intro}</p>
+    <p>{site.seeking} <a href={`mailto:${site.email}`}>{site.email}</a> · <a href={site.resume}>Resume (PDF)</a></p>
+  </section>
+
+  {featured.length > 0 && (
+    <section aria-labelledby="featured">
+      <h2 class="label" id="featured">Featured</h2>
+      {featured.map((p) => <FeaturedProject project={p} />)}
+    </section>
+  )}
+
+  <section aria-labelledby="projects">
+    <h2 class="label" id="projects">All projects</h2>
+    {projects.length ? <ProjectTable projects={projects} /> : <p class="todo">TODO: no projects yet. Add one at /admin.</p>}
+  </section>
+</Base>
+
+<style>
+  .intro { max-width: var(--measure); font-size: 1.2rem; line-height: 1.55; }
+  .intro p:last-child { margin-bottom: 0; }
+</style>

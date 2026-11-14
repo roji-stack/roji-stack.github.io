@@ -1,0 +1,41 @@
+---
+import type { Project } from '../lib/projects';
+import { dateRange } from '../lib/format';
+import { optimize } from '../lib/media';
+interface Props { project: Project }
+const { project: p } = Astro.props;
+const cover = p.data.cover ? await optimize(p.data.cover, 800) : undefined;
+const href = `/projects/${p.id}/`;
+---
+<article class="featured">
+  {cover && (
+    <a href={href} class="thumb" tabindex="-1" aria-hidden="true">
+      <img src={cover.src} srcset={cover.srcset} sizes="(min-width: 640px) 240px, 100vw"
+           width={cover.width} height={cover.height} alt="" loading="lazy" decoding="async" />
+    </a>
+  )}
+  <div class="text">
+    <h3><a href={href}>{p.data.title}</a></h3>
+    <p class="meta muted">{dateRange(p.data)}{p.data.role && ` · ${p.data.role}`}</p>
+    <p class="summary">{p.data.summary}</p>
+    {p.data.tags.length > 0 && <ul class="tags" aria-label="Tags">{p.data.tags.map((t) => <li>{t}</li>)}</ul>}
+  </div>
+</article>
+
+<style>
+  .featured {
+    display: grid; grid-template-columns: 1fr; gap: 1rem;
+    padding: 1.25rem 0; border-bottom: 1px solid var(--rule);
+  }
+  .featured:first-of-type { padding-top: 0; }
+  @media (min-width: 640px) {
+    .featured:has(.thumb) { grid-template-columns: 240px 1fr; gap: 1.5rem; }
+  }
+  .thumb img {
+    width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+    border: 1px solid var(--rule); border-radius: var(--radius); background: var(--bg-subtle);
+  }
+  h3 { margin: 0 0 0.2rem; font-size: var(--step-1); }
+  .meta { margin: 0 0 0.5rem; }
+  .summary { margin: 0 0 0.6rem; max-width: var(--measure); }
+</style>
