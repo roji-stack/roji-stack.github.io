@@ -1,11 +1,11 @@
 ---
-title: Smart Knee Brace
+title: MustangMotion Smart Knee Brace
 date: 2025-09-01
 endDate: ""
 ongoing: true
 summary: Rehabilitation wearable that tracks muscle activation and gait to estimate ACL recovery progress against the patient's healthy leg.
 role: Mechanical Design Lead, WE-BMC
-tags: [ESP32, C++, Onshape, SolidWorks, Ansys, 3D printing, biomedical]
+tags: [ESP32, C++, Onshape, SolidWorks, Ansys, 3D printing, biomedical, TNBC]
 cover: /src/assets/media/knee-brace-prototypes.jpg
 coverAlt: Two wired knee brace prototypes on a table, with black printed frames and hinges, light-blue TPU cuffs, electronics enclosures and spare cuff pieces beside them.
 gallery: []
@@ -13,7 +13,7 @@ links: []
 featured: true
 draft: false
 overview: |
-  A smart rehabilitation wearable that monitors muscle activation (EMG) and gait (IMU) and predicts a recovery timeline for ACL injuries, using the patient's healthy leg as the baseline. Built for a biomedical design competition with the Western Engineering Biomedical Engineering Club. I led the mechanical design: the polycentric hinge, the electronics enclosures and the cuff system.
+  A smart rehabilitation wearable that monitors muscle activation (EMG) and gait (IMU) and predicts a recovery timeline for ACL injuries, using the patient's healthy leg as the baseline. MustangMotion was our team's entry in the True North Biomedical Competition (TNBC), built with the Western Engineering Biomedical Engineering Club. I led the mechanical design: the polycentric hinge, the electronics enclosures and the cuff system.
 problem: |
   Rehabilitation is often a guessing game for patients. Without objective data it's hard to gauge progress and know when it's safe to return to normal activity, and that uncertainty can lead to overexertion or undertreatment, both of which slow recovery.
 
@@ -55,12 +55,16 @@ build: |
   | Competition documentation | 4 wks | Compiled findings, design decisions and system architecture for the mid-project report. |
   | Integration & final validation | 4 wks | Final hardware–software integration, enclosure refinements, pitch preparation. |
 testing: |
+  ![A person wearing the brace on their leg bends and straightens the knee while a laptop on a chair shows the dashboard, whose knee-angle indicator moves with the leg](/src/assets/media/knee-brace-worn-test.mp4 "Worn test: the dashboard's knee-angle readout follows the leg as the knee bends and straightens.")
+
   | Metric | Result | Conditions |
   |---|---|---|
   | Load capacity | 1.2 kN | Simulated peak stance-phase loading |
   | Total system mass | < 850 g | Including integrated PCBs and battery |
   | Signal correlation | > 90 % | EMG activation vs. joint-angle mapping |
   | System latency | < 50 ms | End-to-end telemetry |
+
+  TODO: add how MustangMotion placed at TNBC, if you want it here.
 
   TODO: describe how each number was measured: the Ansys load case and boundary conditions, the scale used for mass, how correlation and latency were computed. A plot or a screenshot of the FEA result would help here.
 differently: |
