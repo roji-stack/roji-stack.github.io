@@ -24,7 +24,7 @@ Static site built with [Astro](https://astro.build), hosted on GitHub Pages, edi
 
 ## 1. Local development
 
-Requires **Node 22.12 or newer** (`node -v`). The version is pinned in `.nvmrc`.
+Requires **Node 24** (`node -v`; Astro 7 needs ≥ 22.23.4, and CI uses the version in `.nvmrc`). Use npm 11+, which ships with Node 24: older npm rejects the lockfile.
 
 ```sh
 npm install
