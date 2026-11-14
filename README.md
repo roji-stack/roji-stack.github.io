@@ -170,6 +170,7 @@ the safer mode for math and tables.
 | Code | Three backticks plus the language: <code>```cpp</code> … <code>```</code> |
 | Table | `\| Metric \| Result \|` / `\|---\|---\|` / `\| Mass \| 850 g \|` |
 | Subheading inside a section | `### Heading` |
+| Dollar amounts | Write `\$225` in a sentence. Two plain `$` signs in one paragraph are read as a math formula. (A single `$` per table cell is fine.) |
 | Mark something unfinished | Start a paragraph with `TODO` and it gets a dashed orange box |
 
 Images are resized and converted to WebP at build time (and large photos are also shrunk to 2400 px
