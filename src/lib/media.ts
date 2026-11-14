@@ -10,7 +10,7 @@ const imageModules = import.meta.glob<{ default: ImageMetadata }>(
   '/src/assets/media/*.{png,PNG,jpg,JPG,jpeg,JPEG,webp,WEBP,gif,GIF,avif,AVIF,tif,tiff}',
   { eager: true },
 );
-const fileModules = import.meta.glob<string>('/src/assets/media/*.{pdf,PDF,step,STEP,stl,STL,zip}', {
+const fileModules = import.meta.glob<string>('/src/assets/media/*.{pdf,PDF,step,STEP,stl,STL,zip,mp4,MP4,webm,WEBM,mov,MOV,m4v}', {
   eager: true,
   query: '?url',
   import: 'default',
@@ -36,6 +36,19 @@ export function resolveImage(path: string): ImageMetadata {
 }
 
 export const resolveFile = (path: string): string | undefined => files.get(nameOf(path));
+
+export const isVideo = (path: string) => /\.(mp4|webm|mov|m4v)([?#].*)?$/i.test(path);
+
+/**
+ * Poster frame for a video: an image uploaded next to it named "<video-name>-poster.<ext>",
+ * e.g. clip.mp4 → clip-poster.jpg. Also gives the video its width/height so the page
+ * doesn't jump when it loads.
+ */
+export async function videoPoster(path: string): Promise<OptimizedImage | undefined> {
+  const stem = nameOf(path).replace(/\.[^.]+$/, '');
+  const key = [...images.keys()].find((k) => k.replace(/\.[^.]+$/, '') === `${stem}-poster`);
+  return key ? optimize(key) : undefined;
+}
 
 export interface OptimizedImage {
   src: string;
