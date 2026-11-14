@@ -77,11 +77,11 @@ function rehypeMedia() {
       if (/\.pdf([?#].*)?$/i.test(href)) {
         const url = isMediaPath(href) ? (resolveFile(href) ?? href) : href;
         const label = textOf(child).trim() || 'PDF';
+        // A lazy iframe only downloads the PDF when it scrolls near the viewport.
+        // The caption link is the fallback for browsers that can't show PDFs inline (most phones).
         parent.children[index] = h('figure.pdf', [
-          h('object', { data: url, type: 'application/pdf', 'aria-label': label }, [
-            h('p', ['Your browser can’t show this PDF inline. ', h('a', { href: url }, `Open ${label}`), '.']),
-          ]),
-          h('figcaption', [label, ' · ', h('a', { href: url }, 'open PDF')]),
+          h('iframe', { src: url, title: label, loading: 'lazy' }),
+          h('figcaption', [label, ' · ', h('a', { href: url }, 'open the PDF in a new tab'), ' (recommended on phones)']),
         ]);
         return SKIP;
       }

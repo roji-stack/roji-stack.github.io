@@ -16,7 +16,20 @@
       "notes": ""
     }
   ],
-  "coursework": [],
+  "coursework": [
+    "MSE 2202B · Introduction to Mechatronic Design",
+    "MSE 2201A · Introduction to Electrical Instrumentation",
+    "MSE 2233B · Circuits and Systems",
+    "ECE 2205A · Electric Circuits",
+    "BME 3201A · Fundamentals of Biomedical Engineering Design",
+    "MSE 2213B · Engineering Dynamics",
+    "MSE 2212A · Mechanics of Materials",
+    "COMPSCI 1037A · Computer Science Fundamentals II",
+    "ENGSCI 1036B · Programming Fundamentals for Engineers",
+    "NMM 1411B · Linear Algebra and Numerical Analysis for Engineers",
+    "NMM 2276B · Applied Mathematics for Electrical and Mechanical Engineers III",
+    "ENGSCI 1050 · Foundations of Engineering Practice"
+  ],
   "experience": [
     {
       "role": "Engineering Director",
@@ -51,9 +64,21 @@
     }
   ],
   "skills": [
-    { "group": "Programming & firmware", "items": "Python, C, C++, JavaScript, TypeScript, SQL, PID control" },
-    { "group": "Web & simulation", "items": "React, Vite, Tailwind CSS, Flask, ROS 2, PyBullet" },
-    { "group": "Electronics & hardware", "items": "ESP32, sensor integration, power distribution, multimeters, oscilloscopes" },
-    { "group": "Tools", "items": "Git/GitHub, Linux/Unix terminal, SolidWorks, Onshape" }
+    {
+      "group": "Programming & firmware",
+      "items": "Python, C, C++, JavaScript, TypeScript, SQL, PID control"
+    },
+    {
+      "group": "Web & simulation",
+      "items": "React, Vite, Tailwind CSS, Flask, ROS 2, PyBullet"
+    },
+    {
+      "group": "Electronics & hardware",
+      "items": "ESP32, sensor integration, power distribution, multimeters, oscilloscopes"
+    },
+    {
+      "group": "Tools",
+      "items": "Git/GitHub, Linux/Unix terminal, SolidWorks, Onshape"
+    }
   ]
 }
