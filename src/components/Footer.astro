@@ -1,8 +1,14 @@
 ---
 import site from '../lib/site';
-import { isoDate } from '../lib/format';
 // Last-updated = build date. Every CMS save triggers a rebuild, so this stays current.
 const built = new Date();
+// Exact build time (Toronto), shown on hover: if it doesn't match your latest save,
+// you're looking at a cached copy. Hard-refresh with Cmd+Shift+R.
+const builtExact = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'America/Toronto', year: 'numeric', month: '2-digit', day: '2-digit',
+  hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZoneName: 'short',
+}).format(built).replace(',', '');
+const builtDate = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Toronto' }).format(built); // YYYY-MM-DD
 ---
 <footer class="site-footer">
   <ul>
@@ -10,5 +16,5 @@ const built = new Date();
     <li><a href={site.github}>GitHub</a></li>
     <li><a href={site.linkedin}>LinkedIn</a></li>
   </ul>
-  <p>Last updated <time datetime={isoDate(built)}>{isoDate(built)}</time></p>
+  <p>Last updated <time datetime={built.toISOString()} title={`Built ${builtExact}`}>{builtDate}</time></p>
 </footer>

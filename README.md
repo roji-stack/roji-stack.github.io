@@ -51,6 +51,17 @@ Using a custom domain later:
    `site_url`/`display_url` in `public/admin/config.yml`.
 3. Add the new domain to the Worker's `ALLOWED_DOMAINS` (step 3c below).
 
+### Seeing an old version after publishing?
+
+GitHub Pages lets browsers reuse a page for up to 10 minutes (`cache-control: max-age=600`). GitHub
+sets this and it can't be changed on `github.io`. It only affects a browser that had the page open
+recently; new visitors always get the latest version, and CSS/images are renamed on every change, so a
+cached page never mixes old and new styles.
+
+To check a change you just published: wait for **Actions → Deploy to GitHub Pages** to go green, then
+hard-refresh (**Cmd+Shift+R**) or use a private window. Hover over the "Last updated" date in the
+footer to see the exact build time; if it's older than your last save, you're looking at a cached copy.
+
 ## 3. Set up the GitHub login for /admin
 
 **Background (checked Nov 2026):** Netlify Identity / Git Gateway are deprecated and not supported by
