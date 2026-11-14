@@ -22,11 +22,10 @@
 }
 
 /* PDFs */
-.prose figure.pdf object {
+.prose figure.pdf iframe {
   width: 100%; aspect-ratio: 8.5 / 11; max-height: 85vh;
   border: 1px solid var(--rule); border-radius: var(--radius); display: block;
 }
-.prose figure.pdf object p { padding: 1rem; }
 
 /* Tables */
 .table-wrap { overflow-x: auto; margin: 0 0 1.25rem; }

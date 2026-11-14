@@ -140,3 +140,9 @@ differently: |-
   - The hinge FEA pointed to machining it in aluminium rather than printing it.
   - A loose wire inside the opaque enclosure was the top-rated risk; strain relief or a window to inspect the wiring would address it.
 ---
+
+## Final report
+
+The report the team submitted to TNBC in February 2026, with the full requirements, concept-selection matrices, DFMEA and appendices:
+
+[TNBC 2025–26 Final Report (WE-BMC)](/src/assets/media/TNBC%202025-26%20Final%20Report%20Submission%20-%20WEBMC.pdf)
