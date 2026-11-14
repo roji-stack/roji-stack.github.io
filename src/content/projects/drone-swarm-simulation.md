@@ -16,6 +16,8 @@ featured: true
 draft: false
 overview: |
   FireSwarm is a multi-quadcopter simulation built on PyBullet and `gym-pybullet-drones`, using the Crazyflie 2.x (CF2X) model. Instead of the library's built-in controllers, every drone runs my own cascaded PID loops, from position down to individual motor RPMs. A leader flies a figure-eight while two followers hold a V-formation behind it, and an artificial potential field keeps them from colliding. The same control code is also split into a ROS 2 workspace with separate simulation, trajectory and control nodes.
+
+  ![PyBullet simulation of three small quadcopters over a checkered floor, flying in formation and leaving thin coloured flight trails behind them](/src/assets/media/drone-swarm-sim.mp4 "The V-formation demo running in PyBullet (portfolio_showcase.py). Trails show each drone's path over the last 10 seconds.")
 problem: |
   The goal was to model a multi-agent robotic system and validate motor-control logic in simulation before any hardware exists:
 
@@ -71,7 +73,7 @@ build: |
   - **Scripts:** `fly.py` (single-drone altitude step response), `fly_3d.py` (3D position control), `swarm.py` (independent altitude setpoints for three drones), `portfolio_showcase.py` (V-formation with collision avoidance and flight-trail rendering).
   - **ROS 2 workspace** (`ros2_swarm_ws`, package `swarm_sim`): a simulator node, a trajectory-planner node publishing the leader's path, and a control node running the PID loops for every drone, connected through topics.
 
-  TODO: add a screenshot or short clip of the PyBullet window with the flight trails, and a diagram of the ROS 2 topics.
+  TODO: add a diagram of the ROS 2 nodes and topics.
 testing: |
   **Single drone, altitude step to 2.0 m**, with the critically damped gains ($K_p = 1.2$, $K_d = 0.36$): 0 % overshoot, final altitude 2.00 m, settled in roughly 1.3 s (plot above).
 

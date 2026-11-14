@@ -162,6 +162,7 @@ the safer mode for math and tables.
 | You want | Write |
 |---|---|
 | Image with caption | `![What the image shows](/src/assets/media/photo.jpg "Caption text")`: use the editor's image button to upload, then add the caption in quotes |
+| Video | Upload an `.mp4` (keep it under ~5 MB; a screen recording converted with `ffmpeg -i in.mov -vf scale=1000:-2 -crf 26 -an out.mp4` is plenty), then write it like an image: `![What happens in the clip](/src/assets/media/clip.mp4 "Caption")`. Optional: upload a still named `clip-poster.jpg` and it's shown before playback. Videos never autoplay |
 | Embedded PDF | Upload the PDF, then put a link to it **alone on its own line**: `[Design report](/src/assets/media/report.pdf)` |
 | CAD screenshot | Same as an image. Transparent PNGs get a white backing so they read in dark mode |
 | Inline math | `$\omega_n = \sqrt{k/m}$` |

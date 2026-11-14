@@ -22,7 +22,7 @@ import rehypeStringify from 'rehype-stringify';
 import { visit, SKIP } from 'unist-util-visit';
 import { h } from 'hastscript';
 import type { Root, Element, ElementContent, Parent } from 'hast';
-import { isMediaPath, optimize, resolveFile } from './media';
+import { isMediaPath, isVideo, optimize, resolveFile, videoPoster } from './media';
 
 const isWs = (n: ElementContent) => n.type === 'text' && !n.value.trim();
 const onlyChild = (el: Element) => {
@@ -31,6 +31,26 @@ const onlyChild = (el: Element) => {
 };
 const textOf = (n: ElementContent): string =>
   n.type === 'text' ? n.value : n.type === 'element' ? n.children.map(textOf).join('') : '';
+
+/** Turn an <img> pointing at a video file into a native <video> player (no JS). */
+function toVideo(img: Element, jobs: Promise<void>[]) {
+  const src = String(img.properties.src ?? '');
+  const alt = String(img.properties.alt ?? '');
+  const url = isMediaPath(src) ? (resolveFile(src) ?? src) : src;
+  const video = h('video', { controls: true, muted: true, loop: true, playsInline: true, preload: 'metadata', 'aria-label': alt || undefined }, [
+    h('source', { src: url, type: /\.webm/i.test(src) ? 'video/webm' : 'video/mp4' }),
+    h('p', ['Your browser can’t play this video. ', h('a', { href: url }, 'Download it'), '.']),
+  ]);
+  if (isMediaPath(src)) {
+    jobs.push(
+      videoPoster(src).then((poster) => {
+        if (!poster) return;
+        Object.assign(video.properties, { poster: poster.src, width: poster.width, height: poster.height, preload: 'none' });
+      }),
+    );
+  }
+  return video;
+}
 
 function rehypeMedia() {
   return async (tree: Root) => {
@@ -45,7 +65,11 @@ function rehypeMedia() {
       if (child.tagName === 'img') {
         const title = child.properties.title as string | undefined;
         delete child.properties.title;
-        parent.children[index] = h('figure', [child, ...(title ? [h('figcaption', title)] : [])]);
+        const media = isVideo(String(child.properties.src ?? '')) ? toVideo(child, jobs) : child;
+        parent.children[index] = h(isVideo(String(child.properties.src ?? '')) ? 'figure.video' : 'figure', [
+          media,
+          ...(title ? [h('figcaption', title)] : []),
+        ]);
         return SKIP;
       }
 
@@ -64,7 +88,11 @@ function rehypeMedia() {
     });
 
     // 2. Resolve media paths: optimize images, fingerprint other files.
-    visit(tree, 'element', (node) => {
+    visit(tree, 'element', (node, index, parent: Parent | undefined) => {
+      if (node.tagName === 'img' && isVideo(String(node.properties.src ?? '')) && parent && index !== undefined) {
+        parent.children[index] = toVideo(node, jobs); // video used inline, not on its own line
+        return SKIP;
+      }
       if (node.tagName === 'img') {
         const src = String(node.properties.src ?? '');
         node.properties.loading = 'lazy';
