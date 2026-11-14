@@ -242,4 +242,10 @@ use the cover image as the Open Graph image, and `sitemap-index.xml` is generate
   check that `/admin` still loads.
 - **Dependencies:** Dependabot opens weekly PRs. `npm audit` should report 0 vulnerabilities.
   `package.json` has an `overrides` entry forcing the patched KaTeX version for `rehype-katex`/`remark-math`.
+- **If the deploy fails with `Missing: … from lock file`:** the lockfile was written on macOS without
+  some Linux-only entries. Check and fix it locally:
+  ```sh
+  npx npm@latest ci --dry-run --ignore-scripts --os=linux --cpu=x64 --libc=glibc   # reproduces the CI error
+  rm package-lock.json && npx npm@latest install --package-lock-only               # regenerate, then commit it
+  ```
 - **Never commit** transcripts or other private documents. `.gitignore` excludes `*transcript*.pdf`.
