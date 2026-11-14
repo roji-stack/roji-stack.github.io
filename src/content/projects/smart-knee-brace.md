@@ -27,9 +27,7 @@ draft: false
 overview: |-
   MustangMotion is the Western Engineering Biomedical Engineering Club's entry in the True North Biomedical Competition (TNBC) 2025–26: a "smart rehabilitation knee sleeve" for people recovering from ACL reconstruction. One sleeve on each leg measures knee angle with a pair of IMUs and muscle activation in the quadriceps and hamstrings with custom EMG boards, then streams everything over Bluetooth Low Energy to a PC app. The app shows the injured and healthy leg side by side and estimates how far the patient is from returning to sport.
 
-  I was on the mechanical team and designed the polycentric hinge.
-
-  TODO: add anything else you personally worked on (cuffs, enclosures, testing, the pitch).
+  I was on the mechanical team and designed the polycentric hinge, the overall cuff shape and setup, as well as a portion of the electronic enclosures.
 problem: |-
   Rehabilitation is often a guessing game for patients. Only about 55 % of athletes return to competitive sport after ACL reconstruction ([Ardern et al., 2014](https://doi.org/10.1136/bjsports-2013-093398)), and return-to-sport decisions still rest largely on subjective assessment. Without objective data it's hard to gauge progress and know when it's safe to return, and that uncertainty can lead to overexertion or undertreatment, both of which slow recovery.
 
@@ -122,8 +120,6 @@ testing: |-
 
   Pitch rose steadily with the protractor and ended near 90°, while roll stayed near zero for the first half and then overshot, which is why pitch was used for the knee angle. Through the middle of the sweep, pitch read noticeably below the protractor (by roughly 15–20° at the widest point), so the ±3° target wasn't met across the whole range in this test.
 
-  TODO: confirm this reading of the plot, and add any later accuracy results.
-
   ### EMG
 
   With constant flexion and relaxation, the custom EMG board showed clear activation and deactivation, while the sourced module's output was noisy and unstable (plots in Appendix I of the report).
@@ -132,20 +128,13 @@ testing: |-
 
   A DFMEA rated the design's risks. The highest risk priority number was 210 out of 1000. The top electrical risk was a wire coming loose inside the opaque enclosure (RPN 189), since it's hard to spot and exposes the 9 V system. The top mechanical risk was skin irritation or sweat at the neoprene and electrode contact.
 
-  ### Headline numbers
+  ### TNBC Placement
 
-  | Metric | Result | Conditions |
-  |---|---|---|
-  | Load capacity | 1.2 kN | Simulated peak stance-phase loading |
-  | Total system mass | < 850 g | Including integrated PCBs and battery |
-  | Signal correlation | > 90 % | EMG activation vs. joint-angle mapping |
-  | System latency | < 50 ms | End-to-end telemetry |
+  MustangMotion secured 1st in the provincial standings, beating out Ontario universities such as McMaster, Toronto Metropolitan, and the University of Toronto, to name a few.
 
-  TODO: none of these four numbers appear in the final report (it lists targets of < 200 ms latency and ≤ 5 lb). Confirm where each came from and how it was measured, or remove the table.
-
-  TODO: add how MustangMotion placed at TNBC, if you want it here.
+  We also placed 4th overall, behind the teams from Memorial University of Newfoundland, McGill, and the University of Manitoba, 1st, 2nd, and 3rd respectively.
 differently: |-
-  TODO: what you'd change in the next revision. Starting points from the report:
+  Starting points from the report:
 
   - The IMU pitch lagged the protractor mid-sweep; better calibration or fusion tuning could close the gap to the ±3° target.
   - The hinge FEA pointed to machining it in aluminium rather than printing it.
