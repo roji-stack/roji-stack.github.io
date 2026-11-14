@@ -1,0 +1,14 @@
+---
+import site from '../lib/site';
+import { isoDate } from '../lib/format';
+// Last-updated = build date. Every CMS save triggers a rebuild, so this stays current.
+const built = new Date();
+---
+<footer class="site-footer">
+  <ul>
+    <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+    <li><a href={site.github}>GitHub</a></li>
+    <li><a href={site.linkedin}>LinkedIn</a></li>
+  </ul>
+  <p>Last updated <time datetime={isoDate(built)}>{isoDate(built)}</time></p>
+</footer>

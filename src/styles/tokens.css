@@ -1,0 +1,52 @@
+/*
+ * Design tokens: the one place to change the look of the site.
+ *   Accent color → --accent (+ --accent-visited, and the dark-mode pair below)
+ *   Fonts        → --font-body / --font-mono (also swap the @fontsource imports
+ *                  at the top of src/layouts/Base.astro if you change families)
+ */
+:root {
+  /* Palette (light) */
+  --bg: #fbfaf7;            /* off-white paper */
+  --bg-subtle: #f3f1ec;     /* code blocks, table headers */
+  --text: #1b1b1a;          /* near-black, ~16:1 on --bg */
+  --text-muted: #5a5853;    /* metadata, captions, ~6.9:1 on --bg (AA) */
+  --rule: #d9d6cf;          /* hairlines and borders */
+  --accent: #1f4e8c;        /* engineering-drawing blue — links only, ~8:1 */
+  --accent-visited: #1f4e8c;  /* same as accent; set a different shade if you want visited links to stand out */
+  --focus: #1f4e8c;
+  --todo: #8a5a00;          /* marks unfinished content */
+  --figure-bg: #ffffff;     /* behind transparent PNGs (CAD renders, plots); kept light in dark mode too */
+
+  /* Type */
+  --font-body: 'Source Serif 4', 'Source Serif Pro', Georgia, 'Times New Roman', serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --step--1: 0.875rem;      /* metadata, captions */
+  --step-0: 1.125rem;       /* body, 18px */
+  --step-1: 1.3rem;         /* h3 */
+  --step-2: 1.6rem;         /* h2 */
+  --step-3: 2.1rem;         /* h1 */
+  --leading: 1.6;
+
+  /* Layout */
+  --measure: 70ch;          /* max line length for prose */
+  --page: 46rem;            /* page column */
+  --radius: 3px;
+  --space: 1.5rem;
+
+  color-scheme: light dark;
+}
+
+/* Dark mode follows the operating system setting; there's no toggle. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161615;
+    --bg-subtle: #1f1f1d;
+    --text: #e6e4de;
+    --text-muted: #a5a29a;
+    --rule: #3a3936;
+    --accent: #8fb4e8;
+    --accent-visited: #8fb4e8;
+    --focus: #8fb4e8;
+    --todo: #e0b45c;
+  }
+}
